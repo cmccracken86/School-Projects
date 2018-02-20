@@ -1,0 +1,89 @@
+#include <iostream>
+#include <iomanip>
+#include <cstring>
+#include <cctype>
+
+using namespace std;
+
+struct CAR_RENTAL
+{
+	char car_type [12];
+	double rate_day;
+	double rate_mile;
+};
+
+void Display_Rental (CAR_RENTAL [], int, int, int, int);
+int Rental_Rate (CAR_RENTAL [], int, char [], int);
+
+int main ()
+{
+	char car [12];
+	int day;
+	int mile;
+	int row = 0;
+	const int table = 6;
+	char response[2];
+
+	CAR_RENTAL car_table[6]={{"Chevrolet" , 50.00, 0.27},
+					  		 {"Corvette", 85.00, 0.45},
+							 {"Pontiac", 53.00, 0.32},
+							 {"Buick", 60.00, 0.32},
+							 {"Oldsmobile", 60.00, 0.35},
+							 {"Cadillac", 70.00, 0.4}
+							};
+	
+	cout << "Do you wish to Calculate Rental Fees?(Y/N): ";
+	cin.getline(response, 2);
+
+	while(toupper(*response) == 'Y')
+	{
+	cout << endl << endl;
+	cout << "Enter the type of rental car:" << endl;
+	cin.getline(car, 12);
+	cout << "Enter the number of days for the rental:" << endl;
+	cin >> day;
+	cout << "Enter the number of miles driven:" << endl;
+	cin >> mile;
+
+	Rental_Rate (car_table, table, car, row);
+	Display_Rental (car_table, table, day, mile, row);
+		
+	cout << endl;
+	cout << "Do you wish to Calculate Rental Fees?(Y/N): ";
+	cin.getline(response, 2);
+	}
+	system("pause");
+	return 0;
+}
+int Rental_Rate(CAR_RENTAL car_table, int table, char car[], int row)
+{
+	for(row = 0; row < 6; ++row)
+		if((strcmp(car_table[row].car_type, car) == 0)
+			return row;
+		else
+			cout << "Invalid Entry"
+	
+	return 0;
+}
+void Display_Rental(CAR_RENTAL car_table[], int table, int day, int mile, int row)
+{
+	double dfinal;
+	double mfinal;
+	double total;
+
+	dfinal = (day * (car_table[row].rate_day));
+	mfinal = (mile * (car_table[row].rate_mile));
+	total = dfinal + mfinal;
+
+	cout << setprecision(2)
+		 << setiosflags(ios::fixed)
+		 << setiosflags(ios::showpoint);
+
+	cout << "The Totals for this Rental are:" << endl << endl;
+	cout << "Car Type: " << setw(21) << car_table[row].car_type << endl;
+	cout << "Day Charges: " << setw(12) << "$" << dfinal << endl;
+	cout << "Mileage Charges: " << setw(9) << "$" << mfinal << endl;
+	cout << "Total Charges: " << setw(10) << "$" << total << endl;
+
+	return;
+}
