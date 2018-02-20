@@ -1,0 +1,65 @@
+#include <iostream>
+#include <cstdlib>
+#include <time.h>
+
+using namespace std;
+
+int genNum();
+bool checkNum(int, int);
+void highLow(int, int);
+
+int main() {
+
+	int guess;
+	int correct;
+	int numGuess = 0;
+
+	cout << "Guess the number 1-100! \nYou have 6 chances";
+	correct = genNum();
+
+	do {
+		cout << "\nYour guess: ";
+		cin >> guess;
+
+		if (cin.fail()) {
+			cout << endl << "Not a Number! Try Again" << endl;
+			cin.clear();
+			cin.ignore(100000, '\n');
+			continue;
+		}
+
+		bool check = checkNum(guess, correct);
+		if (check) {
+			cout << "CORRECT!!!\n\n\n";
+			cout << "It took you " << numGuess << " tries!\n";
+			system("PAUSE");
+			return 0;
+		}
+		else
+			cout << "\nWRONG!!! Try again!\n";
+		numGuess++;
+	} while (numGuess < 6);
+
+	system("PAUSE");
+	return 0;
+}
+int genNum() {
+	srand(time(NULL));
+	int correct = rand() % 100 + 1;
+
+	return correct;
+}
+bool checkNum(int guess, int correct) {
+	if (guess == correct)
+		return true;
+	else {
+		highLow(guess, correct);
+		return false;
+	}
+}
+void highLow(int guess, int correct) {
+	if (guess < correct)
+		cout << "\nTo Low!";
+	else
+		cout << "\nTo High!";
+}
