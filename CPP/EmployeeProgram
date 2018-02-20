@@ -1,0 +1,506 @@
+#include <iostream>
+#include <iomanip>
+#include <cctype>
+#include <cstdlib>
+#include <string>
+
+using namespace std;
+
+class SalariedEmployee
+{
+private:
+	double wagerate;
+	int hours;
+protected:
+	char name[81];
+	char department[50];
+	double ssn;
+	double netpay;
+public:
+	SalariedEmployee(char*, char*, double, double, double, int);
+	SalariedEmployee(SalariedEmployee&);
+	~SalariedEmployee();
+	void set_wagerate(double);
+	double get_wagerate();
+	void set_hours(int);
+	int get_hours();
+	void set_name(char*);
+	char* get_name();
+	void set_department(char*);
+	char* get_department();
+	void set_ssn(double);
+	double get_ssn();
+	void set_netpay(double);
+	double get_netpay();
+	void print_employee(SalariedEmployee&);
+};
+SalariedEmployee::SalariedEmployee(char ename[], char edept[], double snum, double enet, double ewage, int hrs)
+{
+	strcpy_s(name, ename);
+	strcpy_s(department, edept);
+	ssn = snum;
+	netpay = enet;
+	wagerate = ewage;
+	hours = hrs;
+	cout << "Constructor Salaried Employee Created" << endl;
+}
+SalariedEmployee::SalariedEmployee(SalariedEmployee& salemp)
+{
+	strcpy_s(name, salemp.name);
+	strcpy_s(department, salemp.department);
+	ssn = salemp.ssn;
+	netpay = salemp.netpay;
+	wagerate = salemp.wagerate;
+	hours = salemp.hours;
+	cout << "Copy Constructor Salaried Emplopyee Created";
+}
+SalariedEmployee::~SalariedEmployee()
+{
+	cout << "Destrutor used for Salaried Employee";
+}
+void SalariedEmployee::set_wagerate(double wrate)
+{
+	wagerate = wrate;
+}
+double SalariedEmployee::get_wagerate()
+{
+	return wagerate;
+}
+void SalariedEmployee::set_hours(int hrs)
+{
+	hours = hrs;
+}
+void SalariedEmployee::set_name(char* sname)
+{
+	strcpy_s(name, sname);
+}
+char* SalariedEmployee::get_name()
+{
+	return name;
+}
+int SalariedEmployee::get_hours()
+{
+	return hours;
+}
+void SalariedEmployee::set_department(char* setDept)
+{
+	strcpy_s(department, setDept);
+}
+char* SalariedEmployee::get_department()
+{
+	return department;
+}
+void SalariedEmployee::set_ssn(double essn)
+{
+	ssn = essn;
+}
+double SalariedEmployee::get_ssn()
+{
+	return ssn;
+}
+void SalariedEmployee::set_netpay(double npay)
+{
+	netpay = npay;
+}
+double SalariedEmployee::get_netpay()
+{
+	return netpay;
+}
+void SalariedEmployee::print_employee(SalariedEmployee& semp)
+{
+	cout << setw(10) << "Salaried Employee" << endl;
+	cout << setw(3) << "Name: " << semp.name << endl;
+	cout << setw(3) << "Department: " << semp.department << endl;
+	cout << setw(3) << "SSN: " << semp.ssn << endl;
+	cout << setw(3) << "Wage Rate: " << semp.wagerate << endl;
+	cout << setw(3) << "Hours: " << semp.hours << endl << endl;
+	cout << setw(3) << "Net Pay: " << semp.netpay << endl;
+}
+class Administrator : public SalariedEmployee
+{
+private:
+	char Title[50];
+	char AdResponsability[50];
+	char AdSupervisor[81];
+protected:
+	double AnnualSalary;
+public:
+	Administrator(char*, char*, char*, double, char*, char*, double,double, double, int);
+	Administrator(Administrator&);
+	~Administrator();
+	void set_title(char*);
+	char* get_title();
+	void set_responsability(char*);
+	char* get_responsability();
+	void set_supervisor(char*);
+	char* get_supervisor();
+	void set_salary(double);
+	double get_salary();
+	void print_Admin(Administrator&);
+};
+Administrator::Administrator(char* aTitle, char* aResponse, char* aSuper, double aSalary, char* ename, char* edept, double snum, double enet, double ewage, int hrs) 
+	: SalariedEmployee(ename, edept, snum, enet, ewage, hrs)
+{
+	strcpy_s(Title, aTitle);
+	strcpy_s(AdResponsability, aResponse);
+	strcpy_s(AdSupervisor, aSuper);
+	AnnualSalary = aSalary;
+	cout << "Constructor Used Administrator" << endl;
+}
+Administrator::Administrator(Administrator& admin) : SalariedEmployee(admin)
+{
+	strcpy_s(Title, admin.Title);
+	strcpy_s(AdResponsability, admin.AdResponsability);
+	strcpy_s(AdSupervisor, admin.AdSupervisor);
+	AnnualSalary = admin.AnnualSalary;
+	cout << "Copy Constructor Used Administrator";
+}
+Administrator::~Administrator()
+{
+	cout << "Destructor Used Administrator";
+}
+void Administrator::set_title(char* aTitle)
+{
+	strcpy_s(Title, aTitle);
+}
+char* Administrator::get_title()
+{
+	return Title;
+}
+void Administrator::set_responsability(char* aResponse)
+{
+	strcpy_s(AdResponsability, aResponse);
+}
+char* Administrator::get_responsability()
+{
+	return AdResponsability;
+}
+void Administrator::set_supervisor(char* aSuper)
+{
+	strcpy_s(AdSupervisor, aSuper);
+}
+char* Administrator::get_supervisor()
+{
+	return AdSupervisor;
+}
+void Administrator::set_salary(double aSalary)
+{
+	AnnualSalary = aSalary;
+}
+double Administrator::get_salary()
+{
+	return AnnualSalary;
+}
+void Administrator::print_Admin(Administrator& admin)
+{
+	cout << setw(10) << "Administrator Employee" << endl;
+	cout << setw(3) << "Name: " << admin.name << endl;
+	cout << setw(3) << "Department: " << admin.department << endl;
+	cout << setw(3) << "Area of Responsability: " << admin.AdResponsability << endl;
+	cout << setw(3) << "Supervisor: " << admin.AdSupervisor << endl;
+	cout << setw(3) << "SSN: " << admin.ssn << endl << endl;
+	cout << setw(3) << "Net Pay: " << admin.netpay << endl;
+	cout << setw(3) << "Annual Salary: " << admin.AnnualSalary << endl;
+}
+
+int menu();
+SalariedEmployee* create_salaried();
+Administrator* create_admin();
+void modify_salaried(SalariedEmployee&);
+void modify_admin(Administrator&);
+
+int main ()
+{
+	Administrator* admins[2];
+	SalariedEmployee* salaried[5];
+	int mainsel;
+	int subsel;
+	int count = 0;
+	int acount = 0;
+	char aname[81];
+	char sname[81];
+	
+	do
+	{
+		mainsel = menu();
+
+		switch(mainsel)
+		{
+		case 1:
+			if(count < 5)
+			{
+				salaried[count] = create_salaried();
+				++count;
+				cout << endl << "Account Created" << endl << endl;
+			}
+			else
+				cout << "Library Full";
+			break;
+		case 2:
+			if(acount < 2)
+			{
+				admins[acount] = create_admin();
+				++acount;
+				cout << endl << "Account Created" << endl << endl;
+			}
+			else
+				cout << "Library Full";
+			break;
+		case 3:
+			for(int x = 0; x < 5; x++)
+			{
+				strcpy_s(sname, salaried[x]->get_name());
+				cout << x << " " << sname << endl;
+			}
+			cout << "Which Employee do you wish to modify?: ";
+			cin >> subsel;
+			modify_salaried(*salaried[subsel]);
+			cout << "Account Modified" << endl;
+			break;
+		case 4:
+			for(int x = 0; x < 2; x++)
+			{
+				strcpy_s(aname, admins[x]->get_name());
+				cout << x << " " << aname << endl;
+			}
+			cout << "Which Administrator do you wish to modify?: ";
+			cin >> subsel;
+			modify_admin(*admins[subsel]);
+			cout << "Account Modified";
+			break;
+		case 5:
+			cout << endl << endl;
+			
+			for(int x = 0; x < 5; x++)
+			{
+				strcpy_s(sname, salaried[x]->get_name());
+				cout << x << "  " << sname << endl;
+			}
+			cout << "For which employe do you wish to print a record:";
+			cin >> subsel;
+			salaried[subsel]->print_employee(*salaried[subsel]);
+			break;
+		case 6:
+			cout << endl << endl;
+			
+			for(int x = 0; x < 2; x++)
+			{
+				strcpy_s(aname, admins[x]->get_name());
+				cout << x << "  " << aname << endl;
+			}
+			cout << "For which employe do you wish to print a record:";
+			cin >> subsel;
+			admins[subsel]->print_Admin(*admins[subsel]);
+			break;
+		}
+	}while(mainsel != 7);
+
+	system("pause");
+	return 0;
+}
+int menu ()
+{
+	int selection;
+	
+	cout << setw(10) << "- Please make a selection -" << endl;
+	cout << "1 - Create a Salaried Employee Record" << endl;
+	cout << "2 - Create an Administrator Record" << endl;
+	cout << "3 - Modify a Salaried Employee Record" << endl;
+	cout << "4 - Modify an Administrator Record" << endl;
+	cout << "5 - Print a Salaried Employee Record" << endl;
+	cout << "6 - Print an Administrator Record" << endl;
+	cout << "7 - Exit Program" << endl;
+	cin >> selection;
+	cin.get();
+	return selection;
+}
+SalariedEmployee* create_salaried()
+{
+	char ename[81];
+	char edept[50];
+	double snum;
+	double enet;
+	double ewage;
+	int hrs;
+
+	SalariedEmployee* acc_ptr;
+
+	cout << endl;
+	cout << "Enter Employee Name: ";
+	cin.getline(ename, 81);
+	cout << endl << "Enter Employee Department: ";
+	cin.getline(edept, 50);
+	cout << endl << "Enter Employee Social Security Number: ";
+	cin >> snum;
+	cout << endl << "Enter Employee Wage Rate: ";
+	cin >> ewage;
+	cout << endl << "Enter Employee Hours per Week: ";
+	cin >> hrs;
+	cout << endl;
+	enet = ewage * hrs;
+	cin.get();
+
+	acc_ptr = new SalariedEmployee (ename, edept, snum, enet, ewage, hrs);
+
+	return acc_ptr;
+}
+Administrator* create_admin()
+{
+	char aTitle[50];
+	char aResponse[50];
+	char aSuper[81];
+	char ename[81];
+	char edept[50] = {"Administrator"};
+	double snum;
+	double enet;
+	double aSalary;
+	double ewage = 0;
+	int hrs = 0;
+
+	Administrator* acc_ptr;
+
+	cout << endl << "Enter Employee Name: ";
+	cin.getline(ename, 81);
+	cout << endl << "Enter Employee Department of Responsability: ";
+	cin.getline(aResponse, 50);
+	cout << endl << "Enter Employee Title: ";
+	cin.getline(aTitle, 50);
+	cout << endl << "Enter Employee Supervisor: ";
+	cin.getline(aSuper, 81);
+	cout << endl << "Enter Employee Social Security Number: ";
+	cin >> snum;
+	cout << endl << "Enter Employee Annual Salary: ";
+	cin >> aSalary;
+	cout << endl;
+	enet = (aSalary / 26);
+	cin.get();
+	
+	acc_ptr = new Administrator(aTitle, aResponse, aSuper, aSalary, ename, edept, snum, enet, ewage, hrs);
+
+	return acc_ptr;
+}
+void modify_salaried(SalariedEmployee& salaried)
+{
+	int selection;
+	int hrs;
+	char name[81];
+	char dept[50];
+	double ssn;
+	double wrate;
+	double total;
+	
+	do
+	{
+	cout << "Which of the following do you wish to modify: ";
+	cout << endl << setw(3) << "1 - Name";
+	cout << endl << setw(3) << "2 - Department";
+	cout << endl << setw(3) << "3 - Social Security Number";
+	cout << endl << setw(3) << "4 - Wage Rate";
+	cout << endl << setw(3) << "5 - Hours";
+	cout << endl << setw(3) << "6 - Exit" << endl;
+	cin >> selection;
+	cin.get();
+	
+	switch(selection)
+		{
+		case 1:
+			cout << "Enter New Name: ";
+			cin.getline(name, 81);
+			salaried.set_name(name);
+			break;
+		case 2:
+			cout << "Enter New Department: ";
+			cin.getline(dept, 50);
+			salaried.set_department(dept);
+			break;
+		case 3:
+			cout << "Enter New Social Security Number: ";
+			cin >> ssn;
+			salaried.set_ssn(ssn);
+			break;
+		case 4:
+			cout << "Enter New Wage Rate: ";
+			cin >> wrate;
+			salaried.set_wagerate(wrate);
+			break;
+		case 5:
+			cout << "Enter New Hours: ";
+			cin >> hrs;
+			salaried.set_hours(hrs);
+			break;
+		default:
+			cout << "Invalid Selection!";
+			break;
+		}
+	}while(selection !=6);
+	
+	wrate = salaried.get_wagerate();
+	hrs = salaried.get_hours();
+	total = wrate * hrs;
+	salaried.set_netpay(total);
+}
+void modify_admin(Administrator& admins)
+{
+	int selection;
+	char name[81];
+	char responsability[50];
+	char title[50];
+	char super[81];
+	double salary;
+	double ssn;
+	double total;
+	
+	cout << "Which of the following do you wish to modify: ";
+	cout << endl << setw(3) << "1 - Name";
+	cout << endl << setw(3) << "2 - Department of Responsability";
+	cout << endl << setw(3) << "3 - Social Security Number";
+	cout << endl << setw(3) << "4 - Title";
+	cout << endl << setw(3) << "5 - Supervisor";
+	cout << endl << setw(3) << "6 - Salary";
+	cout << endl << setw(3) << "7 - Exit";
+	cin >> selection;
+	cin.get();
+	
+	do
+	{
+		switch(selection)
+		{
+		case 1:
+			cout << "Enter New Name: ";
+			cin.getline(name, 81);
+			admins.set_name(name);
+			break;
+		case 2:
+			cout << "Enter New Department of Responsability: ";
+			cin.getline(responsability, 50);
+			admins.set_department(responsability);
+			break;
+		case 3:
+			cout << "Enter New Social Security Number: ";
+			cin >> ssn;
+			admins.set_ssn(ssn);
+			break;
+		case 4:
+			cout << "Enter New Title: ";
+			cin.getline(title, 50);
+			admins.set_title(title);
+			break;
+		case 5:
+			cout << "Enter New Supervisor: ";
+			cin.getline(super, 81);
+			admins.set_supervisor(super);
+			break;
+		case 6:
+			cout << "Enter New Salary: ";
+			cin >> salary;
+			admins.set_salary(salary);
+			break;
+		default:
+			cout << "Invalid Selection!";
+			break;
+		}
+	}while(selection !=7);
+	salary = admins.get_salary();
+	total = (salary / 26);
+	admins.set_netpay(total);
+}
