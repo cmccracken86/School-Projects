@@ -1,0 +1,163 @@
+#include <iostream>
+#include <iomanip>
+#include <string>
+#include <cctype>
+
+using namespace std;
+
+class Hotel_Room
+{
+protected:
+	char RoomNumber[4];
+	char* guest;
+	double DailyRate;
+public:
+	Hotel_Room(char*, double, char*);
+	Hotel_Room(const Hotel_Room&);
+	~Hotel_Room();
+	const char* Get_Number() const;
+	const char* Get_Guest() const;
+	double Get_Rate();
+	void Change_Rate(double);
+};
+Hotel_Room::Hotel_Room(char rnum[], double rate, char* gst)
+{
+	strcpy_s(RoomNumber, rnum);
+	DailyRate = rate;
+	guest = new char[strlen(gst) + 1];
+	strcpy(guest, gst);
+	cout << endl;
+	cout << "Constructor Hotel Room executed." << endl;
+}
+Hotel_Room::Hotel_Room(const Hotel_Room& hotel_r)
+{
+	strcpy_s(RoomNumber, hotel_r.RoomNumber);
+	DailyRate = hotel_r.DailyRate;
+	strcpy(guest, hotel_r.guest);
+	cout << endl << endl;
+	cout << "Copy constructor executed." << endl;
+}
+Hotel_Room::~Hotel_Room()
+{
+	cout << endl << endl;
+	cout << "The Account for Room Number " << RoomNumber << " is now Closed";
+	cout << endl << endl << endl;
+}
+const char* Hotel_Room::Get_Number() const
+{
+	return RoomNumber;
+}
+const char* Hotel_Room::Get_Guest() const
+{
+	return guest;
+}
+double Hotel_Room::Get_Rate()
+{
+	return DailyRate;
+}
+void Hotel_Room::Change_Rate(double newRate)
+{
+	DailyRate = newRate;
+}
+class Guest_Room : public Hotel_Room
+{
+friend void transfer(Guest_Room&, char*);
+
+private:
+	int capacity;
+	int status;
+	int days;
+public:
+	Guest_Room(int, int, int, char*, double, char*);
+	Guest_Room(const Guest_Room&);
+	~Guest_Room();
+	double Calc_Bill();
+	void Display(double);
+};
+Guest_Room::Guest_Room(int rmax, int occupancy, int stay, char rnum[], double grate, char* gst1) : 
+			Hotel_Room(rnum, grate, gst1)
+{
+	capacity = rmax;
+	status = occupancy;
+	days = stay;
+	cout << "Guest Room Constructor Activated" << endl;
+}
+Guest_Room::Guest_Room(const Guest_Room& guest_r) : Hotel_Room(guest_r)
+{
+	capacity = guest_r.capacity;
+	status = guest_r.status;
+	days = guest_r.days;
+	cout << "Copy Constructor Guest Used" << endl;
+}
+Guest_Room::~Guest_Room()
+{
+	cout << "Guest Room Destructor Used" << endl;
+}
+double Guest_Room::Calc_Bill()
+{
+	double total = 0;
+
+	total = DailyRate * days * status;
+	
+	return total;
+}
+void Guest_Room::Display(double Total)
+{
+	cout << setw(35) << "Welcome to Hotel McCracken" << endl << endl;
+	cout << "Name of Guest:" << setw(23) << guest << endl;
+	cout << "Room Number:" << setw(25) << RoomNumber << endl;
+	cout << "Nightly Rate:" << setw(18) << "$" << DailyRate << endl;
+	cout << "Number of Nights:" << setw(20) << days << endl << endl;
+	cout << "Total Bill:" << setw(19) << "$" << Total << endl;
+	cout << endl << endl << setw(35) << "Thank you for Staying with us" << endl;
+	cout << endl << endl;
+}
+void transfer(Guest_Room& room1, char* room2)
+{
+	cout << endl << "Transfering Guests";
+	room1.status = 0;
+	room1.Display(0);
+	strcpy(room1.RoomNumber, room2);
+}
+int main()
+{
+	cout << setprecision(2)
+		 << setiosflags(ios::fixed)
+		 << setiosflags(ios::showpoint);
+	
+	char rnum[4];
+	char rnum1[4];
+	double grate;
+	char gst1[81];
+	int rmax = 4;
+	int occupancy;
+	int stay;
+	double gTotal = 0;
+
+	cout << "Creating Guest Room" << endl;
+	cout << "Please enter your name:  ";
+	cin.getline(gst1, 81);
+	cout << "Enter the three digit Room Number:  ";
+	cin.getline(rnum, 4);
+	cout << "Enter the Room Rate:  ";
+	cin >> grate;
+	cout << "How many people are staying:  ";
+	cin >> occupancy;
+	cout << "How many nights:  ";
+	cin >> stay;
+
+	Guest_Room guestRoom(rmax, occupancy, stay, rnum, grate, gst1);
+	gTotal = guestRoom.Calc_Bill();
+	
+	guestRoom.Display(gTotal);
+	
+	cin.get();
+	cout << "Enter the room you wish to transfer to: ";
+	cin.getline(rnum1, 4);
+	transfer(guestRoom, rnum1);
+
+	guestRoom.Display(gTotal);
+
+	system("pause");
+	return 0;
+}
