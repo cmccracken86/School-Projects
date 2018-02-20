@@ -1,0 +1,46 @@
+ 1 import java.util.*;
+ 2 import java.io.*;
+ 3 
+ 4 public class MilitaryTime
+ 5 {
+ 6    static Scanner console = new Scanner(System.in);
+ 7    
+ 8    public static void main(String[] args)
+ 9    {
+10       int hr;
+11       int min;
+12       int sec;
+13       String ap;
+14       
+15       try
+16       {
+17          System.out.print("Please enter the time Hours Minutes Seconds AM or PM seperated by spaces?:\n");
+18          hr = console.nextInt();
+19          if(hr < 1 || hr > 12)
+20             throw new InvalidHrExcep();
+21          min = console.nextInt();
+22          if(min < 0 || min > 59)
+23             throw new InvalidMinExcep();
+24          sec = console.nextInt();
+25          if(sec < 0 || min > 59)
+26             throw new InvalidSecExcep();
+27          ap = console.next();
+28          if(ap.equals("PM") || ap.equals("pm"))
+29             hr = hr + 12;
+30          
+31          System.out.println("The Military Time is - " + hr + ":" + min + ":" + sec);
+32       }
+33       catch (InvalidHrExcep ihe)
+34       {
+35          System.out.print("Invalid Hour");   
+36       }
+37       catch (InvalidMinExcep ime)
+38       {
+39          System.out.print("Invalid Minute"); 
+40       }
+41       catch (InvalidSecExcep ise)
+42       {
+43          System.out.print("Invalid Second"); 
+44       }
+45    }
+46 }
