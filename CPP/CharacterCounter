@@ -1,0 +1,47 @@
+#include <iostream>
+#include <fstream>
+#include <iomanip>
+#include <cstdlib>
+#include <cctype>
+
+using namespace std;
+
+int main()
+{
+	char file_name [51];
+	char ch;
+	char buffer[] = "abcdef g h ijklmnopqrstuvwx yz";
+	int count = 0;
+
+	cout << "Enter the File Name: ";
+	cin.getline(file_name, 51);
+	
+	fstream file(file_name, ios::out);
+	
+	file << buffer;
+
+	file.close();
+
+	file.open(file_name, ios::in);
+
+	if(!file)
+	{
+		cout << endl;
+		cout << "File Not Found!" << endl;
+		system("pause");
+		exit(1);
+	}
+	
+	while((ch = file.get()) != EOF)
+	{
+		if(ch != ' ')
+			count++;
+	}
+
+	file.close();
+
+	cout << "The File Contains " << count << " number of characters" << endl;
+
+	system("pause");
+	return 0;
+}
