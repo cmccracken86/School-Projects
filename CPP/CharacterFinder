@@ -1,0 +1,31 @@
+#include <iostream>
+#include <iomanip>
+
+using namespace std;
+
+int main ()
+{
+	char line[81];
+	char* line_ptr = line;
+	char letter;
+	int letter_count = 0;
+	int temp;
+		
+	cout <<"Please enter a line of words" << endl;
+	cin.getline(line, 81);
+
+	cout <<"Please enter a single letter" << endl;
+	cin.get(letter);
+
+	for (temp = 0; temp != '\0'; ++temp)
+	{
+		if (letter = line_ptr[temp])
+			++letter_count;
+	}
+
+	cout <<"There are " << letter_count <<" of the letter " << letter << " in your line of words." << endl;
+
+	system("pause");
+	return 0;
+
+}
